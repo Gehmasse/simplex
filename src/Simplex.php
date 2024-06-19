@@ -39,13 +39,13 @@ class Simplex
 
             if($k > 5) break;
 
-            if($this->debug) echo $k, '. tableau:', PHP_EOL, PHP_EOL;
+            $this->debug($k . '. tableau:');
 
             if($this->debug) $this->print();
 
             [$i, $j] = $this->pivot();
 
-            if($this->debug) echo 'PV (', $i, ', ', $j, ')', PHP_EOL, PHP_EOL;
+            $this->debug('PV ('. $i. ', '. $j . ')');
 
             if($j === null) {
                 die('j === null');
@@ -54,7 +54,7 @@ class Simplex
             $this->simplex($i, $j);
         }
 
-        if($this->debug) echo 'optimum:', PHP_EOL, PHP_EOL;
+        $this->debug('optimum:');
 
         if($this->debug) $this->print();
 
@@ -78,13 +78,13 @@ class Simplex
             $pivElem = $row[$j];
 
             if($pivElem == 0) {
-                if($this->debug) echo $i, ': ---', PHP_EOL;
+                $this->debug($i . ': ---', 1);
                 continue;
             }
 
             $quot = $rightVal / $pivElem;
 
-            if($this->debug) echo $i, ': ', $quot, PHP_EOL;
+            $this->debug($i . ': ' . $quot, 1);
 
             if($quot < 0) {
                 continue;
@@ -143,14 +143,14 @@ class Simplex
 
             $factor = $this->tab[$i][$jPiv];
 
-            if($this->debug) echo $i, '. - ', $factor, ' * ', $iPiv, '.', PHP_EOL; 
+            $this->debug($i . '. - ' . $factor . ' * ' . $iPiv . '.', 1);
 
             foreach($row as $j => $x) {
                 $this->tab[$i][$j] = round($x - $factor * $pivRow[$j], 3);
             }
         }
 
-        if($this->debug) echo PHP_EOL;
+        $this->debug();
     }
 
     public function print(): self
@@ -178,15 +178,17 @@ class Simplex
             if($hasOne) {
                 $res = $this->tab[$onePos][$this->width - 1];
 
-                if($this->debug) echo 'x', $j, ' = ', $res, PHP_EOL;
+                $this->debug('x' . $j . ' = ' . $res, 1);
 
                 $solutions[] = $res;
             } else {
-                if($this->debug) echo 'x', $j, ' = 0', PHP_EOL;
+                $this->debug('x' . $j . ' = 0', 1);
 
                 $solutions[] = 0;
             }
         }
+
+        $this->debug();
 
         return $solutions;
     }
@@ -212,5 +214,12 @@ class Simplex
         }
 
         return [$hasOne, $onePos];
+    }
+
+    private function debug(string $s = '', int $breaks = 2): void
+    {
+        if($this->debug) {
+            echo $s . str_repeat(PHP_EOL, $breaks);
+        }
     }
 }

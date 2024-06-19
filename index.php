@@ -21,4 +21,4 @@ echo json_encode((new Leo\Simplex\Simplex([
     [ 0,  1, 0, 0, 0, 1,   500], // constraint 4
     
     [-300, -200, 0, 0, 0, 1, -50000], // function to maximise
-], 3))->run()->solutions()), PHP_EOL;
+], 3, true))->run()->solutions()), PHP_EOL;
