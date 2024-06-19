@@ -1,0 +1,17 @@
+{
+    "name": "leo/simplex",
+    "description": "simplex algorithm implementation",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Leo\\Simplex\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Leo Nickl",
+            "email": "leo@leonickl.de"
+        }
+    ],
+    "require": {}
+}
